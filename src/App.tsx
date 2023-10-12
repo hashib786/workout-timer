@@ -2,14 +2,19 @@ import { useEffect, useState } from "react";
 import Calculator from "./Calculator";
 import ToggleSounds from "./ToggleSounds";
 
+export interface workoutI {
+  name: string;
+  numExercises: number;
+}
+
 function App() {
   const [allowSound, setAllowSound] = useState(true);
-  const [time, setTime] = useState(formatTime(new Date()));
+  const [time, setTime] = useState(formatTime(Date.now()));
 
   // Will be be AM or PM
   const partOfDay = time.slice(-2);
 
-  const workouts = [
+  const workouts: workoutI[] = [
     {
       name: "Full-body workout",
       numExercises: partOfDay === "AM" ? 9 : 8,
@@ -32,7 +37,7 @@ function App() {
     },
   ];
 
-  function formatTime(date) {
+  function formatTime(date: number) {
     return new Intl.DateTimeFormat("en", {
       month: "short",
       year: "2-digit",
@@ -44,7 +49,7 @@ function App() {
 
   useEffect(function () {
     const id = setInterval(function () {
-      setTime(formatTime(new Date()));
+      setTime(formatTime(Date.now()));
     }, 1000);
 
     return () => clearInterval(id);

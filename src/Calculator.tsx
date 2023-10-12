@@ -1,21 +1,27 @@
 import { useState } from "react";
-import clickSound from "./ClickSound.m4a";
+import { workoutI } from "./App";
 
-function Calculator({ workouts, allowSound }) {
-  const [number, setNumber] = useState(workouts.at(0).numExercises);
+type Props = {
+  workouts: workoutI[];
+  allowSound: boolean;
+};
+
+function Calculator({ workouts }: Props) {
+  const [number, setNumber] = useState(workouts.at(0)?.numExercises);
   const [sets, setSets] = useState(3);
   const [speed, setSpeed] = useState(90);
   const [durationBreak, setDurationBreak] = useState(5);
 
-  const duration = (number * sets * speed) / 60 + (sets - 1) * durationBreak;
+  const duration =
+    ((number || 1) * sets * speed) / 60 + (sets - 1) * durationBreak;
   const mins = Math.floor(duration);
   const seconds = (duration - mins) * 60;
 
-  const playSound = function () {
-    if (!allowSound) return;
-    const sound = new Audio(clickSound);
-    sound.play();
-  };
+  // const playSound = function () {
+  //   if (!allowSound) return;
+  //   const sound = new Audio("./ClickSound.m4a");
+  //   sound.play();
+  // };
 
   return (
     <>
@@ -37,7 +43,7 @@ function Calculator({ workouts, allowSound }) {
             min="1"
             max="5"
             value={sets}
-            onChange={(e) => setSets(e.target.value)}
+            onChange={(e) => setSets(+e.target.value)}
           />
           <span>{sets}</span>
         </div>
@@ -49,7 +55,7 @@ function Calculator({ workouts, allowSound }) {
             max="180"
             step="30"
             value={speed}
-            onChange={(e) => setSpeed(e.target.value)}
+            onChange={(e) => setSpeed(+e.target.value)}
           />
           <span>{speed} sec/exercise</span>
         </div>
@@ -60,7 +66,7 @@ function Calculator({ workouts, allowSound }) {
             min="1"
             max="10"
             value={durationBreak}
-            onChange={(e) => setDurationBreak(e.target.value)}
+            onChange={(e) => setDurationBreak(+e.target.value)}
           />
           <span>{durationBreak} minutes/break</span>
         </div>
