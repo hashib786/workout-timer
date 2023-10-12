@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { memo, useState } from "react";
 import { workoutI } from "./App";
 
 type Props = {
@@ -84,4 +84,5 @@ function Calculator({ workouts }: Props) {
   );
 }
 
-export default Calculator;
+const MemoizedCalculator = memo(Calculator);
+export default MemoizedCalculator;

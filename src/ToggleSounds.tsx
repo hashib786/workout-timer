@@ -1,3 +1,5 @@
+import { memo } from "react";
+
 type Props = {
   allowSound: boolean;
   setAllowSound: React.Dispatch<React.SetStateAction<boolean>>;
@@ -14,4 +16,5 @@ function ToggleSounds({ allowSound, setAllowSound }: Props) {
   );
 }
 
-export default ToggleSounds;
+const MemoizedToggleSounds = memo(ToggleSounds);
+export default MemoizedToggleSounds;
